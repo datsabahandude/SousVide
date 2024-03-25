@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sous_v/components/categories.dart';
+import 'package:sous_v/components/custom_drawer.dart';
 import 'package:sous_v/components/topic_card.dart';
 import 'package:sous_v/models/topic.dart';
 
@@ -15,8 +16,8 @@ class _HomePageState extends State<HomePage> {
   final scrollctrl = ScrollController();
   int selectedCategoryIndex = 0;
   double infoHeight = 200 // expanded height
-      +
-      170 // infoheight
+      // +
+      // 170 // infoheight
       -
       kToolbarHeight;
   bool isLoading = true;
@@ -110,7 +111,7 @@ class _HomePageState extends State<HomePage> {
                                 padding: const EdgeInsets.only(bottom: 16),
                                 child: TopicCard(
                                   title: items[index].title,
-                                  // image: items[index].image,
+                                  image: items[index].image,
                                   // desc: items[index].desc,
                                   // type: items[index].type,
                                   // price: items[index].price,
@@ -134,6 +135,7 @@ class _HomePageState extends State<HomePage> {
               )
             ],
           ),
+          drawer: const CustomDrawer(),
         ));
   }
 }

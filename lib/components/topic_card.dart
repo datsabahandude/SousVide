@@ -1,18 +1,25 @@
 import 'package:flutter/material.dart';
 
 class TopicCard extends StatelessWidget {
-  const TopicCard({super.key, required this.title});
+  const TopicCard({super.key, required this.title, this.image});
   final String title;
+  final String? image;
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Flex(
+      direction: Axis.horizontal,
       children: [
-        // SizedBox(
-        //   width: 100,
-        //   height: 100,
-        //   child: Image.asset(image),
-        // ),
-        // const SizedBox(width: 16),
+        image != null
+            ? Container(
+                padding: const EdgeInsets.only(right: 10),
+                width: 200,
+                // height: 200,
+                child: Image.asset(
+                  image!,
+                  fit: BoxFit.cover,
+                ),
+              )
+            : Container(),
         Expanded(
           child: DefaultTextStyle(
             style: const TextStyle(color: Colors.black54),
