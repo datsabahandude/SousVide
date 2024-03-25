@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:sous_v/components/categories.dart';
+import 'package:sous_v/components/topic_card.dart';
+import 'package:sous_v/models/topic.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -21,8 +24,8 @@ class _HomePageState extends State<HomePage> {
     if (selectedCategoryIndex != index) {
       int totalItems = 0;
       for (var i = 0; i < index; i++) {
-        // totalItems += CategoryMenus[i].items.length;
-        totalItems += 3;
+        totalItems += theTopics[i].topics.length;
+        // totalItems += 3;
       }
       // 116 = 100 Menu Item Height + 16 bottom padding for each item
       // 50 = 18 title font size + 32 (16 vert padding on title)
@@ -46,7 +49,6 @@ class _HomePageState extends State<HomePage> {
         canPop: false,
         child: Scaffold(
           key: _scaffoldKey,
-          appBar: AppBar(),
           body: Stack(
             children: [
               CustomScrollView(
@@ -78,16 +80,56 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                   ),
-                  const SliverToBoxAdapter(
-                      child: SizedBox(
-                    height: 110,
-                    child: Padding(
-                      padding: EdgeInsets.all(16),
-                      // child: Column(
-                      //   children: [],
-                      // ),
+                  // const SliverToBoxAdapter(
+                  //     child: SizedBox(
+                  //   height: 110,
+                  //   child: Padding(
+                  //     padding: EdgeInsets.all(16),
+                  //     child: Column(
+                  //       children: [],
+                  //     ),
+                  //   ),
+                  // )),
+                  SliverPersistentHeader(
+                    delegate: SVCategories(
+                        onChanged: scrollToCategory,
+                        selectedIndex: selectedCategoryIndex),
+                    pinned: true,
+                  ),
+                  SliverPadding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    sliver: SliverList(
+                      delegate:
+                          SliverChildBuilderDelegate((context, categoryIndex) {
+                        List<Topic> items = theTopics[categoryIndex].topics;
+                        return TopicCategoryItem(
+                          title: theTopics[categoryIndex].category,
+                          items: List.generate(
+                            items.length,
+                            (index) => Padding(
+                                padding: const EdgeInsets.only(bottom: 16),
+                                child: TopicCard(
+                                  title: items[index].title,
+                                  // image: items[index].image,
+                                  // desc: items[index].desc,
+                                  // type: items[index].type,
+                                  // price: items[index].price,
+                                  // onPressed: () {
+                                  //   showDialog(
+                                  //     context: context,
+                                  //     builder: (BuildContext context) =>
+                                  //         MenuDialog(
+                                  //       image: items[index].image,
+                                  //       toCart: addToCart,
+                                  //     ),
+                                  //   );
+                                  // },
+                                )),
+                          ),
+                        );
+                      }, childCount: theTopics.length),
                     ),
-                  )),
+                  )
                 ],
               )
             ],
