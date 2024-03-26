@@ -51,7 +51,7 @@ class CustomDrawer extends StatelessWidget {
       child: CircleAvatar(
           radius: 98,
           backgroundImage: AssetImage(
-            'assets/images/sousvide.jpg',
+            'assets/images/app_icon.png',
           )),
     );
   }
