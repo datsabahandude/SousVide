@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:sous_v/components/categories.dart';
 import 'package:sous_v/components/custom_drawer.dart';
 import 'package:sous_v/components/topic_card.dart';
@@ -21,6 +22,16 @@ class _HomePageState extends State<HomePage> {
       -
       kToolbarHeight;
   bool isLoading = true;
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(const Duration(seconds: 4), () {
+      setState(() {
+        isLoading = false;
+      });
+    });
+  }
+
   void scrollToCategory(int index) {
     if (selectedCategoryIndex != index) {
       int totalItems = 0;
@@ -50,91 +61,100 @@ class _HomePageState extends State<HomePage> {
         canPop: false,
         child: Scaffold(
           key: _scaffoldKey,
-          body: Stack(
-            children: [
-              CustomScrollView(
-                controller: scrollctrl,
-                slivers: [
-                  SliverAppBar(
-                    expandedHeight: 200,
-                    backgroundColor: Colors.white,
-                    elevation: 0,
-                    pinned: true,
-                    flexibleSpace: FlexibleSpaceBar(
-                      background: Image.asset(
-                        "assets/images/sousvide.jpg",
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    leading: Center(
-                      child: MaterialButton(
-                        onPressed: () {
-                          _scaffoldKey.currentState!.openDrawer();
-                        },
-                        color: Colors.white,
-                        shape: const CircleBorder(),
-                        child: const Icon(
-                          Icons.list_outlined,
-                          color: Colors.black,
-                          size: 18,
-                        ),
-                      ),
-                    ),
-                  ),
-                  // const SliverToBoxAdapter(
-                  //     child: SizedBox(
-                  //   height: 110,
-                  //   child: Padding(
-                  //     padding: EdgeInsets.all(16),
-                  //     child: Column(
-                  //       children: [],
-                  //     ),
-                  //   ),
-                  // )),
-                  SliverPersistentHeader(
-                    delegate: SVCategories(
-                        onChanged: scrollToCategory,
-                        selectedIndex: selectedCategoryIndex),
-                    pinned: true,
-                  ),
-                  SliverPadding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    sliver: SliverList(
-                      delegate:
-                          SliverChildBuilderDelegate((context, categoryIndex) {
-                        List<Topic> items = theTopics[categoryIndex].topics;
-                        return TopicCategoryItem(
-                          title: theTopics[categoryIndex].category,
-                          items: List.generate(
-                            items.length,
-                            (index) => Padding(
-                                padding: const EdgeInsets.only(bottom: 16),
-                                child: TopicCard(
-                                  title: items[index].title,
-                                  image: items[index].image,
-                                  // desc: items[index].desc,
-                                  // type: items[index].type,
-                                  // price: items[index].price,
-                                  // onPressed: () {
-                                  //   showDialog(
-                                  //     context: context,
-                                  //     builder: (BuildContext context) =>
-                                  //         MenuDialog(
-                                  //       image: items[index].image,
-                                  //       toCart: addToCart,
-                                  //     ),
-                                  //   );
-                                  // },
-                                )),
+          body: isLoading
+              ? Container(
+                  color: Colors.white,
+                  alignment: Alignment.center,
+                  width: double.infinity,
+                  child: Lottie.asset('assets/lottie/steam1.json'),
+                )
+              : Stack(
+                  children: [
+                    CustomScrollView(
+                      controller: scrollctrl,
+                      slivers: [
+                        SliverAppBar(
+                          expandedHeight: 200,
+                          backgroundColor: Colors.white,
+                          elevation: 0,
+                          pinned: true,
+                          flexibleSpace: FlexibleSpaceBar(
+                            background: Image.asset(
+                              "assets/images/sousvide.jpg",
+                              fit: BoxFit.cover,
+                            ),
                           ),
-                        );
-                      }, childCount: theTopics.length),
-                    ),
-                  )
-                ],
-              )
-            ],
-          ),
+                          leading: Center(
+                            child: MaterialButton(
+                              onPressed: () {
+                                _scaffoldKey.currentState!.openDrawer();
+                              },
+                              color: Colors.white,
+                              shape: const CircleBorder(),
+                              child: const Icon(
+                                Icons.list_outlined,
+                                color: Colors.black,
+                                size: 18,
+                              ),
+                            ),
+                          ),
+                        ),
+                        // const SliverToBoxAdapter(
+                        //     child: SizedBox(
+                        //   height: 110,
+                        //   child: Padding(
+                        //     padding: EdgeInsets.all(16),
+                        //     child: Column(
+                        //       children: [],
+                        //     ),
+                        //   ),
+                        // )),
+                        SliverPersistentHeader(
+                          delegate: SVCategories(
+                              onChanged: scrollToCategory,
+                              selectedIndex: selectedCategoryIndex),
+                          pinned: true,
+                        ),
+                        SliverPadding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          sliver: SliverList(
+                            delegate: SliverChildBuilderDelegate(
+                                (context, categoryIndex) {
+                              List<Topic> items =
+                                  theTopics[categoryIndex].topics;
+                              return TopicCategoryItem(
+                                title: theTopics[categoryIndex].category,
+                                items: List.generate(
+                                  items.length,
+                                  (index) => Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 16),
+                                      child: TopicCard(
+                                        title: items[index].title,
+                                        image: items[index].image,
+                                        // desc: items[index].desc,
+                                        // type: items[index].type,
+                                        // price: items[index].price,
+                                        // onPressed: () {
+                                        //   showDialog(
+                                        //     context: context,
+                                        //     builder: (BuildContext context) =>
+                                        //         MenuDialog(
+                                        //       image: items[index].image,
+                                        //       toCart: addToCart,
+                                        //     ),
+                                        //   );
+                                        // },
+                                      )),
+                                ),
+                              );
+                            }, childCount: theTopics.length),
+                          ),
+                        )
+                      ],
+                    )
+                  ],
+                ),
           drawer: const CustomDrawer(),
         ));
   }
