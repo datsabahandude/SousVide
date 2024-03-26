@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:sous_v/screens/recipepage.dart';
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({super.key});
@@ -57,18 +59,18 @@ class CustomDrawer extends StatelessWidget {
   Widget buildBody(context) {
     return Container(
       padding: const EdgeInsets.all(16),
-      child: const Column(children: <Card>[
+      child: Column(children: <Card>[
         Card(
           child: ListTile(
-            // onTap: () => Get.to(const CustomerList()),
-            title: Text('Recipes'),
-            trailing: Icon(
+            onTap: () => Get.to(const RecipePage()),
+            title: const Text('Recipes'),
+            trailing: const Icon(
               Icons.chevron_right_outlined,
               // color: Colors.white,
             ),
           ),
         ),
-        Card(
+        const Card(
           child: ListTile(
             // onTap: () => Get.to(const StockPage()),
             title: Text('Cooking Results'),
