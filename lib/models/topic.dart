@@ -15,7 +15,8 @@ final List<TopicCategory> theTopics = [
     category: "What is Sous Vide",
     topics: [
       Topic(
-        title: 'Sous Vide is a method....',
+        title:
+            'Sous vide is a cooking method where food is vacuum-sealed in a bag and cooked in a precisely controlled water bath at a low temperature for an extended period. This technique ensures even cooking and helps retain moisture and flavors, resulting in tender and flavorful dishes. It\'s often used for meat, fish, vegetables, and eggs, allowing for precise control over the final texture and doneness of the food.',
         image: "assets/images/sousvide.jpg",
       )
     ],
