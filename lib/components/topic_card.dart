@@ -6,35 +6,36 @@ class TopicCard extends StatelessWidget {
   final String? image;
   @override
   Widget build(BuildContext context) {
-    return Flex(
+    return Wrap(
       direction: Axis.horizontal,
+      spacing: 15,
+      runSpacing: 5,
       children: [
         image != null
-            ? Container(
-                padding: const EdgeInsets.only(right: 10),
-                width: 200,
-                // height: 200,
-                child: Image.asset(
-                  image!,
-                  fit: BoxFit.cover,
+            ? Padding(
+                padding: const EdgeInsets.only(bottom: 8),
+                child: SizedBox(
+                  width: 200,
+                  // height: 200,
+                  child: Image.asset(
+                    image!,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               )
             : Container(),
-        Expanded(
-          child: DefaultTextStyle(
-            style: const TextStyle(color: Colors.black54),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 16,
-                    color: Colors.black,
-                  ),
-                ),
-              ],
+        DefaultTextStyle(
+          style: const TextStyle(color: Colors.black54),
+          child: Text(
+            title,
+            textAlign: TextAlign.justify,
+            // overflow: TextOverflow.ellipsis,
+            // maxLines: 1,
+            style: const TextStyle(
+              fontWeight: FontWeight.w500,
+              fontSize: 16,
+              letterSpacing: 0.5,
+              color: Colors.black,
             ),
           ),
         )
