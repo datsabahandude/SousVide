@@ -123,19 +123,19 @@ class _RecipePageState extends State<RecipePage> {
                             minWidth: 300,
                             color: const Color.fromRGBO(252, 163, 17, 1),
                             onPressed: () async {
-                              // final prefs =
-                              //     await SharedPreferences.getInstance();
-                              // prefs.setBool('skipOnboard', true);
-                              setState(() => isLottie = true);
-                              await Future.delayed(const Duration(seconds: 4),
-                                  () {
-                                setState(() => isLottie = false);
-                                // Navigator.push(
-                                //     context,
-                                //     MaterialPageRoute(
-                                //         builder: (context) =>
-                                //             const WelcomePage()));
-                              });
+                              // // final prefs =
+                              // //     await SharedPreferences.getInstance();
+                              // // prefs.setBool('skipOnboard', true);
+                              // setState(() => isLottie = true);
+                              // await Future.delayed(const Duration(seconds: 4),
+                              //     () {
+                              //   setState(() => isLottie = false);
+                              //   // Navigator.push(
+                              //   //     context,
+                              //   //     MaterialPageRoute(
+                              //   //         builder: (context) =>
+                              //   //             const WelcomePage()));
+                              // });
                             },
                             child: Text('dodo now'.toUpperCase(),
                                 style: const TextStyle(

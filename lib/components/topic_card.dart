@@ -9,15 +9,18 @@ class TopicCard extends StatelessWidget {
     return Wrap(
       direction: Axis.horizontal,
       spacing: 15,
-      runSpacing: 15,
+      runSpacing: 5,
       children: [
         image != null
-            ? SizedBox(
-                width: 200,
-                // height: 200,
-                child: Image.asset(
-                  image!,
-                  fit: BoxFit.cover,
+            ? Padding(
+                padding: const EdgeInsets.only(bottom: 8),
+                child: SizedBox(
+                  width: 200,
+                  // height: 200,
+                  child: Image.asset(
+                    image!,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               )
             : Container(),

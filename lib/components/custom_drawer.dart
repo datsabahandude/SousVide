@@ -9,7 +9,7 @@ class CustomDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      // backgroundColor: ,
+      backgroundColor: Colors.blueGrey,
       child: SafeArea(
           child: Stack(
         children: [
@@ -65,6 +65,26 @@ class CustomDrawer extends StatelessWidget {
           child: ListTile(
             onTap: () => Get.to(const RecipePage()),
             title: const Text('Recipes'),
+            trailing: const Icon(
+              Icons.chevron_right_outlined,
+              // color: Colors.white,
+            ),
+          ),
+        ),
+        Card(
+          color: Colors.white,
+          child: ListTile(
+            onTap: () => Get.to(const CookPage()),
+            title: const Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text('Start Cooking'),
+                Icon(
+                  Icons.local_fire_department_sharp,
+                  color: Colors.red,
+                )
+              ],
+            ),
             trailing: const Icon(
               Icons.chevron_right_outlined,
               // color: Colors.white,
