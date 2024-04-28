@@ -123,14 +123,14 @@ class _HomePageState extends State<HomePage> {
                               List<Topic> items =
                                   theTopics[categoryIndex].topics;
                               return TopicCategoryItem(
-                                title: theTopics[categoryIndex].category,
+                                text: theTopics[categoryIndex].category,
                                 items: List.generate(
                                   items.length,
                                   (index) => Padding(
                                       padding:
                                           const EdgeInsets.only(bottom: 16),
                                       child: TopicCard(
-                                        title: items[index].title,
+                                        text: items[index].text,
                                         image: items[index].image,
                                         // desc: items[index].desc,
                                         // type: items[index].type,

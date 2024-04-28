@@ -1,11 +1,37 @@
 import 'package:flutter/material.dart';
 
 class TopicCard extends StatelessWidget {
-  const TopicCard({super.key, required this.title, this.image});
-  final String title;
+  const TopicCard({super.key, required this.text, this.image});
+  final String text;
   final String? image;
   @override
   Widget build(BuildContext context) {
+    // return RichText(
+    //     textAlign: TextAlign.justify,
+    //     text: TextSpan(children: <InlineSpan>[
+    //       WidgetSpan(
+    //         child: image != null
+    //             ? Padding(
+    //                 padding: const EdgeInsets.only(bottom: 8, right: 8),
+    //                 child: Container(
+    //                   constraints: const BoxConstraints(maxWidth: 200),
+    //                   child: Image.asset(
+    //                     image!,
+    //                     fit: BoxFit.cover,
+    //                   ),
+    //                 ),
+    //               )
+    //             : Container(),
+    //       ),
+    //       TextSpan(
+    //         text: text,
+    //         style: const TextStyle(
+    //           color: Colors.black,
+    //           fontSize: 16,
+    //           letterSpacing: 0.5,
+    //         ),
+    //       ),
+    //     ]));
     return Wrap(
       direction: Axis.horizontal,
       spacing: 15,
@@ -24,19 +50,13 @@ class TopicCard extends StatelessWidget {
                 ),
               )
             : Container(),
-        DefaultTextStyle(
-          style: const TextStyle(color: Colors.black54),
-          child: Text(
-            title,
-            textAlign: TextAlign.justify,
-            // overflow: TextOverflow.ellipsis,
-            // maxLines: 1,
-            style: const TextStyle(
-              fontWeight: FontWeight.w500,
-              fontSize: 16,
-              letterSpacing: 0.5,
-              color: Colors.black,
-            ),
+        Text(
+          text,
+          textAlign: TextAlign.justify,
+          style: const TextStyle(
+            fontWeight: FontWeight.w500,
+            fontSize: 16,
+            letterSpacing: 0.5,
           ),
         )
       ],
@@ -47,10 +67,10 @@ class TopicCard extends StatelessWidget {
 class TopicCategoryItem extends StatelessWidget {
   const TopicCategoryItem({
     super.key,
-    required this.title,
+    required this.text,
     required this.items,
   });
-  final String title;
+  final String text;
   final List items;
 
   @override
@@ -61,11 +81,11 @@ class TopicCategoryItem extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 16),
           child: Text(
-            title,
+            text,
             style: const TextStyle(
               fontSize: 18,
               color: Colors.black,
-              fontWeight: FontWeight.w500,
+              fontWeight: FontWeight.w600,
             ),
           ),
         ),
