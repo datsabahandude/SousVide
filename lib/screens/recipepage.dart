@@ -137,7 +137,7 @@ class _RecipePageState extends State<RecipePage> {
                               //   //             const WelcomePage()));
                               // });
                             },
-                            child: Text('dodo now'.toUpperCase(),
+                            child: Text('let bro cook'.toUpperCase(),
                                 style: const TextStyle(
                                     fontSize: 24,
                                     fontWeight: FontWeight.w900,

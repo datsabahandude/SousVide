@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:slide_countdown/slide_countdown.dart';
 
 class CookPage extends StatefulWidget {
   const CookPage({super.key});
@@ -55,6 +56,9 @@ class _CookPageState extends State<CookPage> {
                 )
               ],
             ),
+            const SlideCountdownSeparated(
+              duration: Duration(minutes: 2),
+            )
           ],
         ),
       ),

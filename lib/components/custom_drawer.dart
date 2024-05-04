@@ -10,6 +10,7 @@ class CustomDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Drawer(
       backgroundColor: Colors.blueGrey,
+      elevation: 8,
       child: SafeArea(
           child: Stack(
         children: [
