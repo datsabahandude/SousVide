@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:slide_countdown/slide_countdown.dart';
+import 'package:sous_v/api/notification_api.dart';
 
 class CookPage extends StatefulWidget {
   const CookPage({super.key});
@@ -58,7 +59,11 @@ class _CookPageState extends State<CookPage> {
             ),
             const SlideCountdownSeparated(
               duration: Duration(minutes: 2),
-            )
+            ),
+            ElevatedButton(
+                onPressed: () => NotificationApi.showNotification(
+                    title: 'Title', body: 'Body', payload: 'Payload'),
+                child: const Text('show notif'))
           ],
         ),
       ),
