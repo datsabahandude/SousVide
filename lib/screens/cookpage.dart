@@ -1,11 +1,14 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 import 'package:slide_countdown/slide_countdown.dart';
 import 'package:sous_v/api/notification_api.dart';
+import 'package:sous_v/components/alarm_provider.dart';
 
 class CookPage extends StatefulWidget {
   const CookPage({super.key});
@@ -17,6 +20,19 @@ class CookPage extends StatefulWidget {
 class _CookPageState extends State<CookPage> {
   File? image;
   Uint8List? imageBytes;
+  String? dateTime;
+  bool repeat = false;
+
+  DateTime? notificationtime;
+
+  String? name = "none";
+  int? msec;
+  @override
+  void initState() {
+    super.initState();
+    context.read<AlarmProvider>().getData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,8 +77,22 @@ class _CookPageState extends State<CookPage> {
               duration: Duration(minutes: 2),
             ),
             ElevatedButton(
-                onPressed: () => NotificationApi.showNotification(
-                    title: 'Title', body: 'Body', payload: 'Payload'),
+                onPressed: () {
+                  Random random = new Random();
+                  int randomNumber = random.nextInt(100);
+
+                  context.read<AlarmProvider>().setAlaram(
+                      '', dateTime!, true, name!, randomNumber, msec!);
+                  context.read<AlarmProvider>().setData();
+
+                  context
+                      .read<AlarmProvider>()
+                      .scheduleNotification(notificationtime!, randomNumber);
+
+                  Navigator.pop(context);
+                  // NotificationApi.showNotification(
+                  //   title: 'Title', body: 'Body', payload: 'Payload');
+                },
                 child: const Text('show notif'))
           ],
         ),

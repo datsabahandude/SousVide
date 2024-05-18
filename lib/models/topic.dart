@@ -49,7 +49,7 @@ final List<TopicCategory> theTopics = [
   //   ],
   // ),
   TopicCategory(
-    category: "Pros",
+    category: "Benefits",
     topics: [
       Topic(
           text:
@@ -57,7 +57,7 @@ final List<TopicCategory> theTopics = [
     ],
   ),
   TopicCategory(
-    category: "Cons",
+    category: "Drawbacks",
     topics: [
       Topic(
           text:

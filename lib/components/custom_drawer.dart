@@ -47,13 +47,14 @@ class CustomDrawer extends StatelessWidget {
   }
 
   Widget buildHeader(context) {
-    return const CircleAvatar(
+    return CircleAvatar(
       radius: 100,
       backgroundColor: Colors.white,
       child: CircleAvatar(
           radius: 98,
-          backgroundImage: AssetImage(
+          child: Image.asset(
             'assets/images/app_icon.png',
+            fit: BoxFit.fitWidth,
           )),
     );
   }
