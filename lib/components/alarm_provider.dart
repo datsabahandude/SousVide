@@ -57,7 +57,7 @@ class AlarmProvider extends ChangeNotifier {
 
   inituilize(context) async {
     var androidInitilize =
-        const AndroidInitializationSettings('@mipmap/ic_launcher');
+        const AndroidInitializationSettings('@mipmap/launcher_icon');
     var iOSinitilize = const DarwinInitializationSettings();
     var initilizationsSettings =
         InitializationSettings(android: androidInitilize, iOS: iOSinitilize);
@@ -79,11 +79,10 @@ class AlarmProvider extends ChangeNotifier {
   showNotification() async {
     const AndroidNotificationDetails androidNotificationDetails =
         AndroidNotificationDetails(
-      'your channel id',
-      'your channel name',
-      channelDescription: 'your channel description',
+      'com.datsabahandude.sous_v',
+      'mychannelid',
       importance: Importance.max,
-      priority: Priority.high,
+      priority: Priority.max,
       ticker: 'ticker',
     );
 
@@ -98,24 +97,26 @@ class AlarmProvider extends ChangeNotifier {
     int newtime =
         datetime.millisecondsSinceEpoch - DateTime.now().millisecondsSinceEpoch;
     await flutterLocalNotificationsPlugin!.zonedSchedule(
-        0,
+        randomNum,
         'Alarm Clock',
         DateFormat().format(DateTime.now()),
         tz.TZDateTime.now(tz.local).add(Duration(milliseconds: newtime)),
         const NotificationDetails(
             android: AndroidNotificationDetails(
-                'your channel id', 'your channel name',
-                channelDescription: 'your channel description',
-                sound: RawResourceAndroidNotificationSound("alarm"),
-                autoCancel: false,
-                playSound: true,
-                priority: Priority.max)),
+          'com.datsabahandude.sous_v', 'mychannelid',
+          // replace default device notification sound
+          sound: RawResourceAndroidNotificationSound("alarm"),
+          priority: Priority.max,
+        )),
         androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
         uiLocalNotificationDateInterpretation:
             UILocalNotificationDateInterpretation.absoluteTime);
   }
 
   cancelNotification(int notificationid) async {
-    await flutterLocalNotificationsPlugin!.cancel(notificationid);
+    // await flutterLocalNotificationsPlugin!.cancel(notificationid);
+    preferences = await SharedPreferences.getInstance();
+    modelist = [];
+    preferences.clear();
   }
 }

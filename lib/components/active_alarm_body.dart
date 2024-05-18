@@ -1,9 +1,8 @@
 import 'dart:async';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:slide_countdown/slide_countdown.dart';
 import 'package:sous_v/components/alarm_provider.dart';
 
 class ActiveAlarmBody extends StatefulWidget {
@@ -52,12 +51,17 @@ class _ActiveAlarmBodyState extends State<ActiveAlarmBody> {
           )),
         ),
         Consumer<AlarmProvider>(builder: (context, alarm, child) {
-          return SizedBox(
-            height: MediaQuery.of(context).size.height * 0.7,
-            child: ListView.builder(
-                itemCount: alarm.modelist.length,
-                itemBuilder: (context, index) {
-                  return Padding(
+          return ListView.builder(
+              shrinkWrap: true,
+              itemCount: alarm.modelist.length,
+              itemBuilder: (context, index) {
+                DateTime alarmEnd =
+                    DateTime.parse(alarm.modelist[index].dateTime!);
+                return InkWell(
+                  onTap: () {
+                    alarm.cancelNotification(0);
+                  },
+                  child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Container(
                         height: MediaQuery.of(context).size.height * 0.1,
@@ -73,46 +77,32 @@ class _ActiveAlarmBodyState extends State<ActiveAlarmBody> {
                             children: [
                               Row(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  Row(
-                                    children: [
-                                      Text(
-                                        alarm.modelist[index].dateTime!,
-                                        style: const TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 16,
-                                            color: Colors.black),
-                                      ),
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 8.0),
-                                        child: Text(
-                                            "${alarm.modelist[index].label}"),
-                                      ),
-                                    ],
+                                  Text(
+                                    DateFormat.yMEd()
+                                        .add_jms()
+                                        .format(alarmEnd),
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16,
+                                        color: Colors.black),
                                   ),
-                                  // CupertinoSwitch(
-                                  //     value:
-                                  //         (alarm.modelist[index].milliseconds! <
-                                  //                 DateTime.now()
-                                  //                     .microsecondsSinceEpoch)
-                                  //             ? false
-                                  //             : alarm.modelist[index].check,
-                                  //     onChanged: (v) {
-                                  //       alarm.editSwitch(index, v);
-
-                                  //       alarm.cancelNotification(
-                                  //           alarm.modelist[index].id!);
-                                  //     }),
+                                  DateTime.now().millisecondsSinceEpoch <=
+                                          alarmEnd.millisecondsSinceEpoch
+                                      ? SlideCountdownSeparated(
+                                          duration: alarmEnd.difference(
+                                          DateTime.now(),
+                                        ))
+                                      : Container(),
                                 ],
                               ),
                             ],
                           ),
                         ),
-                      ));
-                }),
-          );
+                      )),
+                );
+              });
         }),
       ],
     );
