@@ -15,7 +15,7 @@ class ActiveAlarmBody extends StatefulWidget {
 
 class _ActiveAlarmBodyState extends State<ActiveAlarmBody> {
   bool value = false;
-  var timer;
+  late Timer timer;
 
   @override
   void initState() {
@@ -29,7 +29,7 @@ class _ActiveAlarmBodyState extends State<ActiveAlarmBody> {
 
   @override
   void dispose() {
-    timer?.cancel();
+    timer.cancel();
     super.dispose();
   }
 
@@ -88,26 +88,25 @@ class _ActiveAlarmBodyState extends State<ActiveAlarmBody> {
                                         padding:
                                             const EdgeInsets.only(left: 8.0),
                                         child: Text(
-                                            "|${alarm.modelist[index].label}"),
+                                            "${alarm.modelist[index].label}"),
                                       ),
                                     ],
                                   ),
-                                  CupertinoSwitch(
-                                      value:
-                                          (alarm.modelist[index].milliseconds! <
-                                                  DateTime.now()
-                                                      .microsecondsSinceEpoch)
-                                              ? false
-                                              : alarm.modelist[index].check,
-                                      onChanged: (v) {
-                                        alarm.editSwitch(index, v);
+                                  // CupertinoSwitch(
+                                  //     value:
+                                  //         (alarm.modelist[index].milliseconds! <
+                                  //                 DateTime.now()
+                                  //                     .microsecondsSinceEpoch)
+                                  //             ? false
+                                  //             : alarm.modelist[index].check,
+                                  //     onChanged: (v) {
+                                  //       alarm.editSwitch(index, v);
 
-                                        alarm.cancelNotification(
-                                            alarm.modelist[index].id!);
-                                      }),
+                                  //       alarm.cancelNotification(
+                                  //           alarm.modelist[index].id!);
+                                  //     }),
                                 ],
                               ),
-                              Text(alarm.modelist[index].when!)
                             ],
                           ),
                         ),

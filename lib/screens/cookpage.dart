@@ -1,13 +1,13 @@
 import 'dart:io';
 import 'dart:math';
-
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:slide_countdown/slide_countdown.dart';
-import 'package:sous_v/api/notification_api.dart';
 import 'package:sous_v/components/alarm_provider.dart';
 
 class CookPage extends StatefulWidget {
@@ -20,17 +20,17 @@ class CookPage extends StatefulWidget {
 class _CookPageState extends State<CookPage> {
   File? image;
   Uint8List? imageBytes;
-  String? dateTime;
+  String dateDisplay = '';
   bool repeat = false;
+  late AlarmProvider reader;
+  DateTime notificationtime = DateTime.now();
 
-  DateTime? notificationtime;
-
-  String? name = "none";
   int? msec;
   @override
   void initState() {
     super.initState();
-    context.read<AlarmProvider>().getData();
+    reader = context.read<AlarmProvider>();
+    reader.getData();
   }
 
   @override
@@ -40,60 +40,88 @@ class _CookPageState extends State<CookPage> {
       body: Center(
         child: Column(
           children: <Widget>[
-            Stack(
-              children: [
-                CircleAvatar(
-                  radius: 102,
-                  backgroundColor: const Color(0xFF270E01),
-                  child: imageBytes != null
-                      ? ClipOval(
-                          child: Image.memory(
-                            imageBytes!,
-                            width: 200,
-                            height: 200,
-                            fit: BoxFit.cover,
-                          ),
-                        )
-                      : const CircleAvatar(
-                          radius: 100,
-                          backgroundImage:
-                              AssetImage('assets/images/sousvide.jpg'),
-                          backgroundColor: Colors.white,
-                        ),
-                ),
-                Positioned(
-                  right: 10,
-                  bottom: 10,
-                  child: ElevatedButton(
-                      onPressed: () => popup(),
-                      style: ElevatedButton.styleFrom(
-                        shape: const CircleBorder(),
-                      ),
-                      child: const Icon(Icons.add_a_photo_outlined)),
-                )
-              ],
-            ),
+            // Stack(
+            //   children: [
+            //     CircleAvatar(
+            //       radius: 102,
+            //       backgroundColor: const Color(0xFF270E01),
+            //       child: imageBytes != null
+            //           ? ClipOval(
+            //               child: Image.memory(
+            //                 imageBytes!,
+            //                 width: 200,
+            //                 height: 200,
+            //                 fit: BoxFit.cover,
+            //               ),
+            //             )
+            //           : const CircleAvatar(
+            //               radius: 100,
+            //               backgroundImage:
+            //                   AssetImage('assets/images/sousvide.jpg'),
+            //               backgroundColor: Colors.white,
+            //             ),
+            //     ),
+            //     Positioned(
+            //       right: 10,
+            //       bottom: 10,
+            //       child: ElevatedButton(
+            //           onPressed: () => popup(),
+            //           style: ElevatedButton.styleFrom(
+            //             shape: const CircleBorder(),
+            //           ),
+            //           child: const Icon(Icons.add_a_photo_outlined)),
+            //     )
+            //   ],
+            // ),
+            // SizedBox(
+            //   height: MediaQuery.of(context).size.height * 0.3,
+            //   width: MediaQuery.of(context).size.width,
+            //   child: Center(
+            //       child: CupertinoDatePicker(
+            //     showDayOfWeek: true,
+            //     minimumDate: DateTime.now(),
+            //     dateOrder: DatePickerDateOrder.dmy,
+            //     onDateTimeChanged: (va) {
+            //       dateTime = DateFormat().add_jms().format(va);
+
+            //       msec = va.microsecondsSinceEpoch;
+
+            //       notificationtime = va;
+
+            //       print(dateTime);
+            //       print(msec);
+            //       print(notificationtime);
+            //     },
+            //   )),
+            // ),
             const SlideCountdownSeparated(
               duration: Duration(minutes: 2),
             ),
             ElevatedButton(
                 onPressed: () {
-                  Random random = new Random();
-                  int randomNumber = random.nextInt(100);
+                  notificationtime =
+                      DateTime.now().add(const Duration(minutes: 1));
+                  dateDisplay =
+                      DateFormat('d MMM yyyy HH:mm').format(notificationtime);
+                  int id = DateTime.now().millisecondsSinceEpoch;
+                  reader.setAlarm('1 minutes', dateDisplay, true, id);
+                  reader.setData();
 
-                  context.read<AlarmProvider>().setAlaram(
-                      '', dateTime!, true, name!, randomNumber, msec!);
-                  context.read<AlarmProvider>().setData();
-
-                  context
-                      .read<AlarmProvider>()
-                      .scheduleNotification(notificationtime!, randomNumber);
-
-                  Navigator.pop(context);
-                  // NotificationApi.showNotification(
-                  //   title: 'Title', body: 'Body', payload: 'Payload');
+                  reader.scheduleNotification(notificationtime, id);
                 },
-                child: const Text('show notif'))
+                child: const Text('Set 1 minute notif')),
+            ElevatedButton(
+                onPressed: () {
+                  notificationtime =
+                      DateTime.now().add(const Duration(minutes: 5));
+                },
+                child: const Text('Set 5 minute notif')),
+            ElevatedButton(
+                onPressed: () {
+                  notificationtime =
+                      DateTime.now().add(const Duration(minutes: 10));
+                },
+                child: const Text('Set 10 minute notif')),
           ],
         ),
       ),

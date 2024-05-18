@@ -20,15 +20,13 @@ class AlarmProvider extends ChangeNotifier {
 
   late BuildContext context;
 
-  setAlaram(String label, String dateTime, bool check, String repeat, int id,
-      int milliseconds) {
+  setAlarm(String label, String dateTime, bool check, int id) {
     modelist.add(AlarmModel(
-        label: label,
-        dateTime: dateTime,
-        check: check,
-        when: repeat,
-        id: id,
-        milliseconds: milliseconds));
+      label: label,
+      dateTime: dateTime,
+      check: check,
+      id: id,
+    ));
     notifyListeners();
   }
 
@@ -40,7 +38,7 @@ class AlarmProvider extends ChangeNotifier {
   getData() async {
     preferences = await SharedPreferences.getInstance();
 
-    List<String>? cominglist = await preferences.getStringList("data");
+    List<String>? cominglist = preferences.getStringList("data");
 
     if (cominglist == null) {
     } else {
@@ -89,21 +87,18 @@ class AlarmProvider extends ChangeNotifier {
       ticker: 'ticker',
     );
 
-    const NotificationDetails notificationDetails =
+    const notificationDetails =
         NotificationDetails(android: androidNotificationDetails);
     await flutterLocalNotificationsPlugin!.show(
         0, 'plain title', 'plain body', notificationDetails,
         payload: 'item x');
   }
 
-  scheduleNotification(DateTime datetim, int randomNum) async {
+  scheduleNotification(DateTime datetime, int randomNum) async {
     int newtime =
-        datetim.millisecondsSinceEpoch - DateTime.now().millisecondsSinceEpoch;
-    print(datetim.millisecondsSinceEpoch);
-    print(DateTime.now().millisecondsSinceEpoch);
-    print(newtime);
+        datetime.millisecondsSinceEpoch - DateTime.now().millisecondsSinceEpoch;
     await flutterLocalNotificationsPlugin!.zonedSchedule(
-        randomNum,
+        0,
         'Alarm Clock',
         DateFormat().format(DateTime.now()),
         tz.TZDateTime.now(tz.local).add(Duration(milliseconds: newtime)),
