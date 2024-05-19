@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:slide_countdown/slide_countdown.dart';
@@ -34,21 +35,22 @@ class _ActiveAlarmBodyState extends State<ActiveAlarmBody> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
+    return Column(
       children: [
-        Container(
-          decoration: const BoxDecoration(
-              color: Colors.blueGrey,
-              borderRadius: BorderRadius.all(Radius.circular(30))),
-          height: MediaQuery.of(context).size.height * 0.1,
-          child: Center(
-              child: Text(
-            DateFormat.yMEd().add_jms().format(
-                  DateTime.now(),
-                ),
-            style: const TextStyle(
-                fontWeight: FontWeight.bold, fontSize: 16, color: Colors.white),
-          )),
+        SafeArea(
+          child: Container(
+            padding: EdgeInsets.all(12),
+            decoration: const BoxDecoration(
+                color: Colors.blueGrey,
+                borderRadius: BorderRadius.all(Radius.circular(30))),
+            child: Text(
+              'Alarm List',
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                  color: Colors.white),
+            ),
+          ),
         ),
         Consumer<AlarmProvider>(builder: (context, alarm, child) {
           return ListView.builder(
@@ -57,50 +59,32 @@ class _ActiveAlarmBodyState extends State<ActiveAlarmBody> {
               itemBuilder: (context, index) {
                 DateTime alarmEnd =
                     DateTime.parse(alarm.modelist[index].dateTime!);
-                return InkWell(
-                  onTap: () {
-                    alarm.cancelNotification(0);
-                  },
-                  child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        height: MediaQuery.of(context).size.height * 0.1,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Colors.white,
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  Text(
-                                    DateFormat.yMEd()
-                                        .add_jms()
-                                        .format(alarmEnd),
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16,
-                                        color: Colors.black),
-                                  ),
-                                  DateTime.now().millisecondsSinceEpoch <=
-                                          alarmEnd.millisecondsSinceEpoch
-                                      ? SlideCountdownSeparated(
-                                          duration: alarmEnd.difference(
-                                          DateTime.now(),
-                                        ))
-                                      : Container(),
-                                ],
-                              ),
-                            ],
+                bool isFinished = DateTime.now().millisecondsSinceEpoch <=
+                        alarmEnd.millisecondsSinceEpoch
+                    ? false
+                    : true;
+                return Card(
+                  child: ListTile(
+                    onTap: () {
+                      alarm.cancelNotification(alarm.modelist[index].id!);
+                    },
+                    leading: isFinished
+                        ? const Icon(Icons.done, color: Colors.green)
+                        : const Icon(
+                            Icons.alarm_outlined,
+                            color: Colors.red,
                           ),
-                        ),
-                      )),
+                    title: Text(
+                      DateFormat.yMEd().add_jms().format(alarmEnd),
+                    ),
+                    subtitle: isFinished
+                        ? null
+                        : SlideCountdownSeparated(
+                            duration: alarmEnd.difference(
+                            DateTime.now(),
+                          )),
+                    trailing: Text(alarm.modelist[index].label ?? ''),
+                  ),
                 );
               });
         }),

@@ -2,11 +2,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-
 import 'package:intl/intl.dart';
 import 'package:sous_v/models/alarm_model.dart';
 import 'package:sous_v/screens/homepage.dart';
-
 import 'package:timezone/timezone.dart' as tz;
 
 class AlarmProvider extends ChangeNotifier {
@@ -103,8 +101,8 @@ class AlarmProvider extends ChangeNotifier {
         tz.TZDateTime.now(tz.local).add(Duration(milliseconds: newtime)),
         const NotificationDetails(
             android: AndroidNotificationDetails(
-          'com.datsabahandude.sous_v', 'mychannelid',
-          // replace default device notification sound
+          'com.datsabahandude.sous_v',
+          'mychannelid',
           sound: RawResourceAndroidNotificationSound("alarm"),
           priority: Priority.max,
         )),
@@ -114,9 +112,8 @@ class AlarmProvider extends ChangeNotifier {
   }
 
   cancelNotification(int notificationid) async {
-    // await flutterLocalNotificationsPlugin!.cancel(notificationid);
-    preferences = await SharedPreferences.getInstance();
-    modelist = [];
-    preferences.clear();
+    await flutterLocalNotificationsPlugin!.cancel(notificationid);
+    modelist.removeWhere((alarm) => alarm.id == notificationid);
+    setData();
   }
 }

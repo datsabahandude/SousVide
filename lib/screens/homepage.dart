@@ -82,7 +82,7 @@ class _HomePageState extends State<HomePage> {
                         color: Colors.white,
                       ),
                       Icon(
-                        Icons.event,
+                        Icons.alarm,
                         color: Colors.white,
                       ),
                     ])));
