@@ -1,9 +1,11 @@
 import 'dart:io';
-
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
+import 'package:sous_v/components/alarm_provider.dart';
 
 class CookPage extends StatefulWidget {
   const CookPage({super.key});
@@ -15,46 +17,63 @@ class CookPage extends StatefulWidget {
 class _CookPageState extends State<CookPage> {
   File? image;
   Uint8List? imageBytes;
+  bool repeat = false;
+  late AlarmProvider reader;
+  DateTime notificationtime = DateTime.now();
+  Random random = Random();
+
+  int? msec;
+  @override
+  void initState() {
+    super.initState();
+    reader = context.read<AlarmProvider>();
+    reader.getData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
       body: Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            Stack(
-              children: [
-                CircleAvatar(
-                  radius: 102,
-                  backgroundColor: const Color(0xFF270E01),
-                  child: imageBytes != null
-                      ? ClipOval(
-                          child: Image.memory(
-                            imageBytes!,
-                            width: 200,
-                            height: 200,
-                            fit: BoxFit.cover,
-                          ),
-                        )
-                      : const CircleAvatar(
-                          radius: 100,
-                          backgroundImage:
-                              AssetImage('assets/images/sousvide.jpg'),
-                          backgroundColor: Colors.white,
-                        ),
-                ),
-                Positioned(
-                  right: 10,
-                  bottom: 10,
-                  child: ElevatedButton(
-                      onPressed: () => popup(),
-                      style: ElevatedButton.styleFrom(
-                        shape: const CircleBorder(),
-                      ),
-                      child: const Icon(Icons.add_a_photo_outlined)),
-                )
-              ],
-            ),
+            ElevatedButton(
+                onPressed: () {
+                  notificationtime =
+                      DateTime.now().add(const Duration(seconds: 30));
+                  int id = random.nextInt(100);
+                  reader.setAlarm(
+                      '30 secs', notificationtime.toString(), true, id);
+                  reader.setData();
+
+                  reader.scheduleNotification(notificationtime, id);
+                },
+                child: const Text('Demo Alarm within 30 Seconds')),
+            ElevatedButton(
+                onPressed: () {
+                  notificationtime =
+                      DateTime.now().add(const Duration(hours: 3));
+                  int id = random.nextInt(100);
+                  reader.setAlarm(
+                      'Method A', notificationtime.toString(), true, id);
+                  reader.setData();
+
+                  reader.scheduleNotification(notificationtime, id);
+                },
+                child: const Text('Temp: 45°C+60°C, Time: 3h+3h')),
+            ElevatedButton(
+                onPressed: () {
+                  notificationtime =
+                      DateTime.now().add(const Duration(hours: 6));
+                  int id = random.nextInt(100);
+                  reader.setAlarm(
+                      'Method B', notificationtime.toString(), true, id);
+                  reader.setData();
+
+                  reader.scheduleNotification(notificationtime, id);
+                },
+                child: const Text('Temp: 60°C, Time: 6h')),
           ],
         ),
       ),
