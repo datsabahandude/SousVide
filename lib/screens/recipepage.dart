@@ -32,14 +32,14 @@ class _RecipePageState extends State<RecipePage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Image.asset('assets/images/sousvide.jpg'),
-                  const Text(
-                    'Ride Safely\nwith Car DoDo',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 26,
-                        fontWeight: FontWeight.bold),
-                  ),
+                  // const Text(
+                  //   'Ride Safely\nwith Car DoDo',
+                  //   textAlign: TextAlign.center,
+                  //   style: TextStyle(
+                  //       color: Colors.white,
+                  //       fontSize: 26,
+                  //       fontWeight: FontWeight.bold),
+                  // ),
                 ],
               ),
               Column(
@@ -47,28 +47,28 @@ class _RecipePageState extends State<RecipePage> {
                 children: [
                   Image.asset('assets/images/sousvide.jpg'),
                   // Lottie.asset('assets/lottie/security-car-black.json'),
-                  const Text(
-                    'Need To Go Somewhere?',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 26,
-                        fontWeight: FontWeight.bold),
-                  ),
+                  // const Text(
+                  //   'Need To Go Somewhere?',
+                  //   textAlign: TextAlign.center,
+                  //   style: TextStyle(
+                  //       color: Colors.white,
+                  //       fontSize: 26,
+                  //       fontWeight: FontWeight.bold),
+                  // ),
                 ],
               ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Lottie.asset('assets/lottie/steam1.json'),
-                  const Text(
-                    'Side Income Near Your Institution?',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 26,
-                        fontWeight: FontWeight.bold),
-                  ),
+                  // const Text(
+                  //   'Side Income Near Your Institution?',
+                  //   textAlign: TextAlign.center,
+                  //   style: TextStyle(
+                  //       color: Colors.white,
+                  //       fontSize: 26,
+                  //       fontWeight: FontWeight.bold),
+                  // ),
                 ],
               ),
               Column(
@@ -152,7 +152,7 @@ class _RecipePageState extends State<RecipePage> {
                           count: 4,
                           effect: const ExpandingDotsEffect(
                             dotColor: Colors.black45,
-                            activeDotColor: Color(0xFF800000),
+                            activeDotColor: Color(0xFF14213D),
                             // dotWidth: 20,
                             dotHeight: 8,
                             radius: 16,
