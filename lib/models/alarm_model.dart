@@ -8,12 +8,14 @@ class AlarmModel {
   String? label;
   String? dateTime;
   bool? check;
+  int? part;
   int? id;
 
   AlarmModel({
     required this.label,
     required this.dateTime,
     required this.check,
+    required this.part,
     required this.id,
   });
 
@@ -21,6 +23,7 @@ class AlarmModel {
         label: json["label"],
         dateTime: json["dateTime"],
         check: json["check"],
+        part: json["part"],
         id: json["id"],
       );
 
@@ -28,6 +31,7 @@ class AlarmModel {
         "label": label,
         "dateTime": dateTime,
         "check": check,
+        "part": part,
         "id": id,
       };
 }

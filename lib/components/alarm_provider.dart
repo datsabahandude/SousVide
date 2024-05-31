@@ -18,11 +18,12 @@ class AlarmProvider extends ChangeNotifier {
 
   late BuildContext context;
 
-  setAlarm(String label, String dateTime, bool check, int id) {
+  setAlarm(String label, String dateTime, bool check, int part, int id) {
     modelist.add(AlarmModel(
       label: label,
       dateTime: dateTime,
       check: check,
+      part: part,
       id: id,
     ));
     notifyListeners();

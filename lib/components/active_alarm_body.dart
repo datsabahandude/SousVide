@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:slide_countdown/slide_countdown.dart';
 import 'package:sous_v/components/alarm_provider.dart';
 import 'package:get/get.dart';
+import 'package:sous_v/models/alarm_model.dart';
 
 class ActiveAlarmBody extends StatefulWidget {
   const ActiveAlarmBody({super.key});
@@ -89,43 +90,56 @@ class _ActiveAlarmBodyState extends State<ActiveAlarmBody> {
                         alarmEnd.millisecondsSinceEpoch
                     ? false
                     : true;
+                String part = '';
+                bool isEnd = true;
+                if (item.part == 1) {
+                  isEnd = false;
+                  part = '1';
+                } else if (item.part == 2) {
+                  part = '2';
+                }
                 return Card(
                   child: ListTile(
                     onTap: () {
-                      showDialog(
-                          context: context,
-                          builder: ((context) {
-                            return AlertDialog(
-                              actionsPadding: const EdgeInsets.all(8),
-                              content: const Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Text('Delete?',
-                                      style: TextStyle(
-                                        fontSize: 22,
-                                        fontWeight: FontWeight.w500,
-                                      )),
+                      if (isFinished && !isEnd) {
+                        showProceed(alarm, item);
+                      } else {
+                        showDialog(
+                            context: context,
+                            builder: ((context) {
+                              return AlertDialog(
+                                actionsPadding: const EdgeInsets.all(8),
+                                content: const Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text('Delete?',
+                                        style: TextStyle(
+                                          fontSize: 22,
+                                          fontWeight: FontWeight.w500,
+                                        )),
+                                  ],
+                                ),
+                                actions: [
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      alarm.cancelNotification(item.id!);
+                                      Navigator.pop(context);
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(12)),
+                                    ),
+                                    child: const Text(
+                                      'Confirm',
+                                      style:
+                                          TextStyle(color: Color(0xFFC21C1C)),
+                                    ),
+                                  )
                                 ],
-                              ),
-                              actions: [
-                                ElevatedButton(
-                                  onPressed: () {
-                                    alarm.cancelNotification(item.id!);
-                                    Navigator.pop(context);
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(12)),
-                                  ),
-                                  child: const Text(
-                                    'Confirm',
-                                    style: TextStyle(color: Color(0xFFC21C1C)),
-                                  ),
-                                )
-                              ],
-                            );
-                          }));
+                              );
+                            }));
+                      }
                     },
                     leading: isFinished
                         ? const Icon(Icons.done, color: Colors.green)
@@ -142,7 +156,17 @@ class _ActiveAlarmBodyState extends State<ActiveAlarmBody> {
                             duration: alarmEnd.difference(
                             DateTime.now(),
                           )),
-                    trailing: Text(item.label ?? ''),
+                    trailing: isEnd && part != '2'
+                        ? Text(item.label ?? '')
+                        : Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(item.label ?? ''),
+                              isFinished
+                                  ? const Text('Proceed Part 2?')
+                                  : Text('Part $part'),
+                            ],
+                          ),
                   ),
                 );
               });
@@ -168,11 +192,12 @@ class _ActiveAlarmBodyState extends State<ActiveAlarmBody> {
                         notificationtime =
                             DateTime.now().add(const Duration(hours: 3));
                         int id = random.nextInt(100);
-                        reader.setAlarm(
-                            'Method A', notificationtime.toString(), true, id);
+                        reader.setAlarm('Method A', notificationtime.toString(),
+                            true, 1, id);
                         reader.setData();
 
                         reader.scheduleNotification(notificationtime, id);
+                        Navigator.pop(context);
                         Get.snackbar('Success', 'Alarm added',
                             backgroundColor: Colors.white);
                       },
@@ -186,11 +211,11 @@ class _ActiveAlarmBodyState extends State<ActiveAlarmBody> {
                         notificationtime =
                             DateTime.now().add(const Duration(hours: 6));
                         int id = random.nextInt(100);
-                        reader.setAlarm(
-                            'Method B', notificationtime.toString(), true, id);
+                        reader.setAlarm('Method B', notificationtime.toString(),
+                            true, 0, id);
                         reader.setData();
-
                         reader.scheduleNotification(notificationtime, id);
+                        Navigator.pop(context);
                         Get.snackbar('Success', 'Alarm added',
                             backgroundColor: Colors.white);
                       },
@@ -200,6 +225,50 @@ class _ActiveAlarmBodyState extends State<ActiveAlarmBody> {
                   ),
                 ],
               ),
+            )));
+  }
+
+  Future showProceed(AlarmProvider alarm, AlarmModel item) async {
+    showDialog(
+        context: context,
+        builder: ((context) => AlertDialog(
+              title: const Text(
+                'Start Alarm for Part 2?',
+                style: TextStyle(fontSize: 18),
+              ),
+              actions: [
+                ElevatedButton(
+                    onPressed: () {
+                      alarm.cancelNotification(item.id!);
+                      Navigator.pop(context);
+                    },
+                    style:
+                        ElevatedButton.styleFrom(backgroundColor: Colors.red),
+                    child: const Text(
+                      'No, Delete alarm',
+                      style: TextStyle(color: Colors.white),
+                    )),
+                ElevatedButton(
+                    onPressed: () {
+                      alarm.cancelNotification(item.id!); // delete alarm
+                      notificationtime =
+                          DateTime.now().add(const Duration(hours: 3));
+                      int id = random.nextInt(100);
+                      reader.setAlarm(
+                          'Method A', notificationtime.toString(), true, 2, id);
+                      reader.setData();
+
+                      reader.scheduleNotification(notificationtime, id);
+                      Get.snackbar('Success', 'Alarm added',
+                          backgroundColor: Colors.white);
+                    },
+                    style:
+                        ElevatedButton.styleFrom(backgroundColor: Colors.green),
+                    child: const Text(
+                      'Start',
+                      style: TextStyle(color: Colors.white),
+                    )),
+              ],
             )));
   }
 }
