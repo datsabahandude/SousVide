@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sous_v/screens/cookpage.dart';
 import 'package:sous_v/screens/recipepage.dart';
+import 'package:sous_v/screens/resultpage.dart';
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({super.key});
@@ -95,7 +96,7 @@ class CustomDrawer extends StatelessWidget {
         ),
         Card(
           child: ListTile(
-            onTap: () => Get.to(const CookPage()),
+            onTap: () => Get.to(const ResultPage()),
             title: const Text('Cooking Results'),
             trailing: const Icon(
               Icons.chevron_right_outlined,

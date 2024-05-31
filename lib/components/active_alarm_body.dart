@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:slide_countdown/slide_countdown.dart';
@@ -36,19 +35,26 @@ class _ActiveAlarmBodyState extends State<ActiveAlarmBody> {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SafeArea(
           child: Container(
-            padding: EdgeInsets.all(12),
+            padding: const EdgeInsets.all(12),
+            width: MediaQuery.of(context).size.width * 0.6,
+            alignment: const Alignment(-0.25, 0),
             decoration: const BoxDecoration(
                 color: Colors.blueGrey,
-                borderRadius: BorderRadius.all(Radius.circular(30))),
-            child: Text(
+                borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(30),
+                  bottomRight: Radius.circular(30),
+                )),
+            child: const Text(
               'Alarm List',
               style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                  color: Colors.white),
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+                color: Colors.white,
+              ),
             ),
           ),
         ),
@@ -57,8 +63,8 @@ class _ActiveAlarmBodyState extends State<ActiveAlarmBody> {
               shrinkWrap: true,
               itemCount: alarm.modelist.length,
               itemBuilder: (context, index) {
-                DateTime alarmEnd =
-                    DateTime.parse(alarm.modelist[index].dateTime!);
+                final item = alarm.modelist[index];
+                DateTime alarmEnd = DateTime.parse(item.dateTime!);
                 bool isFinished = DateTime.now().millisecondsSinceEpoch <=
                         alarmEnd.millisecondsSinceEpoch
                     ? false
@@ -66,7 +72,40 @@ class _ActiveAlarmBodyState extends State<ActiveAlarmBody> {
                 return Card(
                   child: ListTile(
                     onTap: () {
-                      alarm.cancelNotification(alarm.modelist[index].id!);
+                      showDialog(
+                          context: context,
+                          builder: ((context) {
+                            return AlertDialog(
+                              actionsPadding: const EdgeInsets.all(8),
+                              content: const Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text('Delete?',
+                                      style: TextStyle(
+                                        fontSize: 22,
+                                        fontWeight: FontWeight.w500,
+                                      )),
+                                ],
+                              ),
+                              actions: [
+                                ElevatedButton(
+                                  onPressed: () {
+                                    alarm.cancelNotification(item.id!);
+                                    Navigator.pop(context);
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(12)),
+                                  ),
+                                  child: const Text(
+                                    'Confirm',
+                                    style: TextStyle(color: Color(0xFFC21C1C)),
+                                  ),
+                                )
+                              ],
+                            );
+                          }));
                     },
                     leading: isFinished
                         ? const Icon(Icons.done, color: Colors.green)
@@ -83,7 +122,7 @@ class _ActiveAlarmBodyState extends State<ActiveAlarmBody> {
                             duration: alarmEnd.difference(
                             DateTime.now(),
                           )),
-                    trailing: Text(alarm.modelist[index].label ?? ''),
+                    trailing: Text(item.label ?? ''),
                   ),
                 );
               });
