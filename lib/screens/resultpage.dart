@@ -6,39 +6,10 @@ class ResultPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-    // int? currentTab;
-
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
-          key: scaffoldKey,
-          appBar: AppBar(
-            title: const Text('Result Page'),
-            bottom: const TabBar(
-                labelColor: Colors.black,
-                labelStyle:
-                    TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                unselectedLabelColor: Colors.grey,
-                unselectedLabelStyle: TextStyle(
-                  fontSize: 17,
-                ),
-                indicatorSize: TabBarIndicatorSize.label,
-                tabs: <Widget>[
-                  Tab(
-                    child: Text('Method A'),
-                  ),
-                  Tab(
-                    child: Text('Method B'),
-                  ),
-                ]),
-          ),
-          body: const TabBarView(
-            children: <Widget>[
-              ResultBody(),
-              ResultBody(),
-            ],
-          )),
-    );
+    return Scaffold(
+        appBar: AppBar(
+          title: const Text('Result Page'),
+        ),
+        body: const ResultBody());
   }
 }
