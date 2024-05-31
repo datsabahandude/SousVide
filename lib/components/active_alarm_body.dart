@@ -1,9 +1,11 @@
 import 'dart:async';
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:slide_countdown/slide_countdown.dart';
 import 'package:sous_v/components/alarm_provider.dart';
+import 'package:get/get.dart';
 
 class ActiveAlarmBody extends StatefulWidget {
   const ActiveAlarmBody({super.key});
@@ -15,11 +17,16 @@ class ActiveAlarmBody extends StatefulWidget {
 class _ActiveAlarmBodyState extends State<ActiveAlarmBody> {
   bool value = false;
   late Timer timer;
+  late AlarmProvider reader;
+  DateTime notificationtime = DateTime.now();
+  Random random = Random();
 
   @override
   void initState() {
     super.initState();
-    context.read<AlarmProvider>().inituilize(context);
+    reader = context.read<AlarmProvider>();
+    reader.getData();
+    reader.inituilize(context);
     timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {});
     });
@@ -41,6 +48,7 @@ class _ActiveAlarmBodyState extends State<ActiveAlarmBody> {
           child: Container(
             padding: const EdgeInsets.all(12),
             width: MediaQuery.of(context).size.width * 0.6,
+            constraints: const BoxConstraints(maxWidth: 400),
             alignment: const Alignment(-0.25, 0),
             decoration: const BoxDecoration(
                 color: Colors.blueGrey,
@@ -48,13 +56,25 @@ class _ActiveAlarmBodyState extends State<ActiveAlarmBody> {
                   topRight: Radius.circular(30),
                   bottomRight: Radius.circular(30),
                 )),
-            child: const Text(
-              'Alarm List',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
-                color: Colors.white,
-              ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                const Text(
+                  'Alarm List',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                    color: Colors.white,
+                  ),
+                ),
+                const SizedBox(width: 10),
+                InkWell(
+                  splashColor: Colors.transparent,
+                  onTap: showAlarmOption,
+                  child: const CircleAvatar(
+                      backgroundColor: Colors.white, child: Icon(Icons.add)),
+                )
+              ],
             ),
           ),
         ),
@@ -129,5 +149,57 @@ class _ActiveAlarmBodyState extends State<ActiveAlarmBody> {
         }),
       ],
     );
+  }
+
+  Future showAlarmOption() async {
+    showDialog(
+        context: context,
+        builder: ((context) => AlertDialog(
+              title: const Text(
+                'Select Cooking Method',
+                style: TextStyle(fontSize: 18),
+              ),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Card(
+                    child: ListTile(
+                      onTap: () {
+                        notificationtime =
+                            DateTime.now().add(const Duration(hours: 3));
+                        int id = random.nextInt(100);
+                        reader.setAlarm(
+                            'Method A', notificationtime.toString(), true, id);
+                        reader.setData();
+
+                        reader.scheduleNotification(notificationtime, id);
+                        Get.snackbar('Success', 'Alarm added',
+                            backgroundColor: Colors.white);
+                      },
+                      title: const Text('Method A:'),
+                      subtitle: const Text('Temp: 45°C+60°C, Time: 3h+3h'),
+                    ),
+                  ),
+                  Card(
+                    child: ListTile(
+                      onTap: () {
+                        notificationtime =
+                            DateTime.now().add(const Duration(hours: 6));
+                        int id = random.nextInt(100);
+                        reader.setAlarm(
+                            'Method B', notificationtime.toString(), true, id);
+                        reader.setData();
+
+                        reader.scheduleNotification(notificationtime, id);
+                        Get.snackbar('Success', 'Alarm added',
+                            backgroundColor: Colors.white);
+                      },
+                      title: const Text('Method B:'),
+                      subtitle: const Text('Temp: 60°C, Time: 6h'),
+                    ),
+                  ),
+                ],
+              ),
+            )));
   }
 }

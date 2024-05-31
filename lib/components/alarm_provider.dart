@@ -103,7 +103,7 @@ class AlarmProvider extends ChangeNotifier {
             android: AndroidNotificationDetails(
           'com.datsabahandude.sous_v',
           'mychannelid',
-          sound: RawResourceAndroidNotificationSound("alarm"),
+          // sound: RawResourceAndroidNotificationSound("alarm"),
           priority: Priority.max,
         )),
         androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,

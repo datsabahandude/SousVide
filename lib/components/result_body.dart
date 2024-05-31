@@ -11,11 +11,32 @@ class ResultBody extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Container(
+            padding: const EdgeInsets.all(12),
+            width: width * 0.6,
+            constraints: const BoxConstraints(maxWidth: 400),
+            alignment: const Alignment(-0.25, 0),
+            decoration: const BoxDecoration(
+              color: Colors.blueGrey,
+              borderRadius: BorderRadius.only(
+                topRight: Radius.circular(30),
+                bottomRight: Radius.circular(30),
+              ),
+            ),
+            child: const Text(
+              'Sous Vide VS Traditional Cooking',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+                color: Colors.white,
+              ),
+            ),
+          ),
           Image.asset('assets/images/cookres1.png'),
           Container(
             padding: const EdgeInsets.all(12),
             width: width * 0.6,
-            constraints: const BoxConstraints(maxWidth: 300),
+            constraints: const BoxConstraints(maxWidth: 400),
             alignment: const Alignment(-0.25, 0),
             decoration: const BoxDecoration(
               color: Colors.blueGrey,
