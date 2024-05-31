@@ -44,7 +44,7 @@ class _CookPageState extends State<CookPage> {
                       DateTime.now().add(const Duration(seconds: 30));
                   int id = random.nextInt(100);
                   reader.setAlarm(
-                      '30 secs', notificationtime.toString(), true, id);
+                      '30 secs', notificationtime.toString(), true, 1, id);
                   reader.setData();
 
                   reader.scheduleNotification(notificationtime, id);
@@ -56,7 +56,7 @@ class _CookPageState extends State<CookPage> {
                       DateTime.now().add(const Duration(hours: 3));
                   int id = random.nextInt(100);
                   reader.setAlarm(
-                      'Method A', notificationtime.toString(), true, id);
+                      'Method A', notificationtime.toString(), true, 1, id);
                   reader.setData();
 
                   reader.scheduleNotification(notificationtime, id);
@@ -68,7 +68,7 @@ class _CookPageState extends State<CookPage> {
                       DateTime.now().add(const Duration(hours: 6));
                   int id = random.nextInt(100);
                   reader.setAlarm(
-                      'Method B', notificationtime.toString(), true, id);
+                      'Method B', notificationtime.toString(), true, 0, id);
                   reader.setData();
 
                   reader.scheduleNotification(notificationtime, id);

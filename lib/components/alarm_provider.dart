@@ -18,11 +18,12 @@ class AlarmProvider extends ChangeNotifier {
 
   late BuildContext context;
 
-  setAlarm(String label, String dateTime, bool check, int id) {
+  setAlarm(String label, String dateTime, bool check, int part, int id) {
     modelist.add(AlarmModel(
       label: label,
       dateTime: dateTime,
       check: check,
+      part: part,
       id: id,
     ));
     notifyListeners();
@@ -103,7 +104,7 @@ class AlarmProvider extends ChangeNotifier {
             android: AndroidNotificationDetails(
           'com.datsabahandude.sous_v',
           'mychannelid',
-          sound: RawResourceAndroidNotificationSound("alarm"),
+          // sound: RawResourceAndroidNotificationSound("alarm"),
           priority: Priority.max,
         )),
         androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
