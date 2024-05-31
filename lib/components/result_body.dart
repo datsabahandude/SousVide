@@ -5,8 +5,7 @@ class ResultBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Define a fixed width for each column
-    const double columnWidth = 150;
+    double width = MediaQuery.of(context).size.width;
 
     return SingleChildScrollView(
       child: Column(
@@ -15,7 +14,8 @@ class ResultBody extends StatelessWidget {
           Image.asset('assets/images/cookres1.png'),
           Container(
             padding: const EdgeInsets.all(12),
-            width: MediaQuery.of(context).size.width * 0.6,
+            width: width * 0.6,
+            constraints: const BoxConstraints(maxWidth: 300),
             alignment: const Alignment(-0.25, 0),
             decoration: const BoxDecoration(
               color: Colors.blueGrey,
@@ -51,19 +51,20 @@ class ResultBody extends StatelessWidget {
                 label: Text('Method B'),
               ),
             ],
-            rows: const <DataRow>[
+            rows: <DataRow>[
               DataRow(
                 cells: [
                   DataCell(
                     SizedBox(
-                      width: columnWidth,
-                      child: Text('A slight gradient in color'),
+                      width: width * 0.4,
+                      child: const Text('A slight gradient in color'),
                     ),
                   ),
                   DataCell(
                     SizedBox(
-                      width: columnWidth,
-                      child: Text('More uniform color from edge to center'),
+                      width: width * 0.4,
+                      child:
+                          const Text('More uniform color from edge to center'),
                     ),
                   ),
                 ],
@@ -72,15 +73,15 @@ class ResultBody extends StatelessWidget {
                 cells: [
                   DataCell(
                     SizedBox(
-                      width: columnWidth,
-                      child: Text(
+                      width: width * 0.4,
+                      child: const Text(
                           'Enhance tenderness due to enzymatic activity at the lower temperature'),
                     ),
                   ),
                   DataCell(
                     SizedBox(
-                      width: columnWidth,
-                      child: Text('Uniformly tender'),
+                      width: width * 0.4,
+                      child: const Text('Uniformly tender'),
                     ),
                   ),
                 ],
