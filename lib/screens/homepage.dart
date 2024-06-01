@@ -1,4 +1,3 @@
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:sous_v/components/active_alarm_body.dart';
@@ -14,10 +13,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-  final _navigationKey = GlobalKey<CurvedNavigationBarState>();
-  final scrollctrl = ScrollController();
-  int index = 0;
-  int selectedCategoryIndex = 0;
+  int _selectedIndex = 0;
   bool isLoading = true;
   @override
   void initState() {
@@ -56,30 +52,41 @@ class _HomePageState extends State<HomePage> {
               )
             : Scaffold(
                 key: _scaffoldKey,
-                body: screen[index],
+                body: screen[_selectedIndex],
                 drawer: const CustomDrawer(),
-                bottomNavigationBar: CurvedNavigationBar(
-                    key: _navigationKey,
-                    height: 60,
-                    index: index,
-                    color: Colors.blueGrey,
-                    backgroundColor: Colors.transparent,
-                    animationCurve: Curves.easeInOut,
-                    animationDuration: const Duration(milliseconds: 300),
-                    onTap: (index) {
-                      setState(() {
-                        this.index = index;
-                      });
-                    },
-                    items: const [
-                      Icon(
-                        Icons.home,
-                        color: Colors.white,
-                      ),
-                      Icon(
-                        Icons.alarm,
-                        color: Colors.white,
-                      ),
+                bottomNavigationBar: BottomNavigationBar(
+                    currentIndex: _selectedIndex,
+                    onTap: _onItemTap,
+                    backgroundColor: Colors.blueGrey,
+                    selectedFontSize: 0,
+                    items: const <BottomNavigationBarItem>[
+                      BottomNavigationBarItem(
+                          label: '',
+                          icon: Padding(
+                            padding: EdgeInsets.all(12),
+                            child: CircleAvatar(
+                              backgroundColor: Colors.white,
+                              child: Icon(
+                                Icons.home,
+                                color: Colors.blueGrey,
+                              ),
+                            ),
+                          )),
+                      BottomNavigationBarItem(
+                          label: '',
+                          icon: CircleAvatar(
+                            backgroundColor: Colors.white,
+                            child: Icon(
+                              Icons.alarm,
+                              color: Colors.blueGrey,
+                            ),
+                          )),
                     ])));
+  }
+
+  void _onItemTap(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
   }
 }
