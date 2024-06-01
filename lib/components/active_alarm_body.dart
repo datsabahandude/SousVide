@@ -150,14 +150,16 @@ class _ActiveAlarmBodyState extends State<ActiveAlarmBody> {
                             DateTime.now(),
                           )),
                     trailing: isEnd && part != '2'
-                        ? Text(item.label ?? '')
+                        ? Text(item.label ?? '') // 0 = method B only
                         : Column(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              Text(item.label ?? ''),
-                              isFinished
-                                  ? const Text('Proceed Part 2?')
-                                  : Text('Part $part'),
+                              Text(item.label ?? ''), // 1 or 2 = method A
+                              (isFinished && part == '1')
+                                  ? const Text(
+                                      'Proceed Part 2?') // timer passed
+                                  : Text(
+                                      'Part $part'), // display part when timer still running
                             ],
                           ),
                   ),
