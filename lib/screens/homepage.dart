@@ -18,11 +18,6 @@ class _HomePageState extends State<HomePage> {
   final scrollctrl = ScrollController();
   int index = 0;
   int selectedCategoryIndex = 0;
-  double infoHeight = 200 // expanded height
-      // +
-      // 170 // infoheight
-      -
-      kToolbarHeight;
   bool isLoading = true;
   @override
   void initState() {

@@ -12,15 +12,52 @@ class TopicCategory {
 
 final List<TopicCategory> theTopics = [
   TopicCategory(
-    category: "What is Sous Vide",
+    category: "Sous Vide Know-How",
     topics: [
       Topic(
         text:
             'Sous vide is a cooking method where food is vacuum-sealed in a bag and cooked in a precisely controlled water bath at a low temperature for an extended period. This technique ensures even cooking and helps retain moisture and flavors, resulting in tender and flavorful dishes. It\'s often used for meat, fish, vegetables, and eggs, allowing for precise control over the final texture and doneness of the food.',
-        image: "assets/images/sousvide.jpg",
+        // image: "assets/images/sousvide.jpg",
       )
     ],
   ),
+  TopicCategory(
+    category: "Things needed to have before starting",
+    topics: [
+      Topic(
+        text: '',
+        image: "assets/images/basicSV.jpg",
+      )
+    ],
+  ),
+  TopicCategory(
+    category: "Overall steps to do",
+    topics: [
+      Topic(
+        text: '',
+        image: "assets/images/howSV.jpg",
+      )
+    ],
+  ),
+  TopicCategory(
+    category: "Tips & Tricks",
+    topics: [
+      Topic(
+        text:
+            '1. Double Bagging: Prevents punctures when cooking foods with sharp edges, such as bones.\n2. Securing: Use a clip to attach the bag to the container\'s side to prevent floating.\n3. Finishing: Pat food dry before searing to achieve a superior crust.',
+      )
+    ],
+  ),
+  TopicCategory(
+    category: "Safety Considerations",
+    topics: [
+      Topic(
+        text:
+            '1. Temperature Control: Ensure food is cooked at recommended temperatures to prevent bacterial growth.\n2. Handling: Refrigerate food promptly after cooking if not consuming immediately.\n3. Storage: Sous vide cooked meat can be stored in vacuum-sealed bags for several days in the refrigerator or longer in the freezer.',
+      )
+    ],
+  ),
+
   // TopicCategory(
   //   category: "Cooking Results",
   //   topics: [
@@ -48,20 +85,20 @@ final List<TopicCategory> theTopics = [
   //     )
   //   ],
   // ),
-  TopicCategory(
-    category: "Benefits",
-    topics: [
-      Topic(
-          text:
-              '1. Precise Temperature Control\n2. Enhanced Flavor Retention\n3. Tender and Juicy Results\n4. Convenience\n5. Reduced Risk of Overcooking')
-    ],
-  ),
-  TopicCategory(
-    category: "Drawbacks",
-    topics: [
-      Topic(
-          text:
-              '1. Time-consuming\n2. Equipment Requirements\n3. Lack of Browning\n4. Texture Concerns\n5. Food Safety Considerations')
-    ],
-  ),
+  // TopicCategory(
+  //   category: "Benefits",
+  //   topics: [
+  //     Topic(
+  //         text:
+  //             '1. Precise Temperature Control\n2. Enhanced Flavor Retention\n3. Tender and Juicy Results\n4. Convenience\n5. Reduced Risk of Overcooking')
+  //   ],
+  // ),
+  // TopicCategory(
+  //   category: "Drawbacks",
+  //   topics: [
+  //     Topic(
+  //         text:
+  //             '1. Time-consuming\n2. Equipment Requirements\n3. Lack of Browning\n4. Texture Concerns\n5. Food Safety Considerations')
+  //   ],
+  // ),
 ];

@@ -6,32 +6,6 @@ class TopicCard extends StatelessWidget {
   final String? image;
   @override
   Widget build(BuildContext context) {
-    // return RichText(
-    //     textAlign: TextAlign.justify,
-    //     text: TextSpan(children: <InlineSpan>[
-    //       WidgetSpan(
-    //         child: image != null
-    //             ? Padding(
-    //                 padding: const EdgeInsets.only(bottom: 8, right: 8),
-    //                 child: Container(
-    //                   constraints: const BoxConstraints(maxWidth: 200),
-    //                   child: Image.asset(
-    //                     image!,
-    //                     fit: BoxFit.cover,
-    //                   ),
-    //                 ),
-    //               )
-    //             : Container(),
-    //       ),
-    //       TextSpan(
-    //         text: text,
-    //         style: const TextStyle(
-    //           color: Colors.black,
-    //           fontSize: 16,
-    //           letterSpacing: 0.5,
-    //         ),
-    //       ),
-    //     ]));
     return Wrap(
       direction: Axis.horizontal,
       spacing: 15,
@@ -40,13 +14,9 @@ class TopicCard extends StatelessWidget {
         image != null
             ? Padding(
                 padding: const EdgeInsets.only(bottom: 8),
-                child: SizedBox(
-                  width: 200,
-                  // height: 200,
-                  child: Image.asset(
-                    image!,
-                    fit: BoxFit.cover,
-                  ),
+                child: Image.asset(
+                  image!,
+                  fit: BoxFit.cover,
                 ),
               )
             : Container(),

@@ -101,23 +101,16 @@ class _ActiveAlarmBodyState extends State<ActiveAlarmBody> {
                 return Card(
                   child: ListTile(
                     onTap: () {
-                      if (isFinished && !isEnd) {
+                      if (isFinished && (isEnd == false)) {
                         showProceed(alarm, item);
                       } else {
                         showDialog(
                             context: context,
                             builder: ((context) {
                               return AlertDialog(
-                                actionsPadding: const EdgeInsets.all(8),
-                                content: const Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Text('Delete?',
-                                        style: TextStyle(
-                                          fontSize: 22,
-                                          fontWeight: FontWeight.w500,
-                                        )),
-                                  ],
+                                title: const Text(
+                                  'Delete?',
+                                  style: TextStyle(fontSize: 18),
                                 ),
                                 actions: [
                                   ElevatedButton(
@@ -126,14 +119,14 @@ class _ActiveAlarmBodyState extends State<ActiveAlarmBody> {
                                       Navigator.pop(context);
                                     },
                                     style: ElevatedButton.styleFrom(
+                                      backgroundColor: const Color(0xFFC21C1C),
                                       shape: RoundedRectangleBorder(
                                           borderRadius:
                                               BorderRadius.circular(12)),
                                     ),
                                     child: const Text(
                                       'Confirm',
-                                      style:
-                                          TextStyle(color: Color(0xFFC21C1C)),
+                                      style: TextStyle(color: Colors.white),
                                     ),
                                   )
                                 ],
@@ -145,7 +138,7 @@ class _ActiveAlarmBodyState extends State<ActiveAlarmBody> {
                         ? const Icon(Icons.done, color: Colors.green)
                         : const Icon(
                             Icons.alarm_outlined,
-                            color: Colors.red,
+                            color: Color(0xFFC21C1C),
                           ),
                     title: Text(
                       DateFormat.yMEd().add_jms().format(alarmEnd),
@@ -242,8 +235,8 @@ class _ActiveAlarmBodyState extends State<ActiveAlarmBody> {
                       alarm.cancelNotification(item.id!);
                       Navigator.pop(context);
                     },
-                    style:
-                        ElevatedButton.styleFrom(backgroundColor: Colors.red),
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFFC21C1C)),
                     child: const Text(
                       'No, Delete alarm',
                       style: TextStyle(color: Colors.white),
@@ -261,6 +254,7 @@ class _ActiveAlarmBodyState extends State<ActiveAlarmBody> {
                       reader.scheduleNotification(notificationtime, id);
                       Get.snackbar('Success', 'Alarm added',
                           backgroundColor: Colors.white);
+                      Navigator.pop(context);
                     },
                     style:
                         ElevatedButton.styleFrom(backgroundColor: Colors.green),
