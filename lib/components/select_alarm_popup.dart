@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sous_v/components/alarm_provider.dart';
 
+import '../screens/homepage.dart';
+
 class SelectAlarmPopup {
   static pickMethod(BuildContext context, AlarmProvider reader) {
     DateTime notificationtime = DateTime.now();
@@ -31,6 +33,11 @@ class SelectAlarmPopup {
 
                         reader.scheduleNotification(notificationtime, id);
                         Navigator.pop(context);
+
+                        Get.to(const HomePage(
+                          index: 1,
+                          isLoading: false,
+                        ));
                         Get.snackbar('Success', 'Alarm added',
                             colorText: Colors.white,
                             backgroundColor: Colors.blueGrey,
@@ -54,6 +61,10 @@ class SelectAlarmPopup {
                         reader.setData();
                         reader.scheduleNotification(notificationtime, id);
                         Navigator.pop(context);
+                        Get.to(const HomePage(
+                          index: 1,
+                          isLoading: false,
+                        ));
                         Get.snackbar('Success', 'Alarm added',
                             colorText: Colors.white,
                             backgroundColor: Colors.blueGrey,

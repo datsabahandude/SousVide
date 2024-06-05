@@ -9,6 +9,7 @@ import 'package:timezone/data/latest_all.dart' as tz;
 
 FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   tz.initializeTimeZones();
@@ -37,7 +38,10 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         fontFamily: GoogleFonts.manrope().fontFamily,
       ),
-      home: const HomePage(),
+      home: const HomePage(
+        index: 0,
+        isLoading: true,
+      ),
     );
   }
 }

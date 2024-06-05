@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sous_v/screens/cookpage.dart';
 import 'package:sous_v/screens/stepspage.dart';
 import 'package:sous_v/screens/resultpage.dart';
 
