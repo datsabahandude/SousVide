@@ -6,26 +6,26 @@ class TopicCard extends StatelessWidget {
   final String? image;
   @override
   Widget build(BuildContext context) {
-    return Wrap(
-      direction: Axis.horizontal,
-      spacing: 15,
-      runSpacing: 5,
+    return Column(
+      mainAxisSize: MainAxisSize.min,
       children: [
         image != null
             ? Image.asset(
                 image!,
                 fit: BoxFit.cover,
               )
-            : Container(),
-        Text(
-          text,
-          textAlign: TextAlign.justify,
-          style: const TextStyle(
-            fontWeight: FontWeight.w500,
-            fontSize: 16,
-            letterSpacing: 0.5,
-          ),
-        )
+            : const SizedBox(),
+        text == ''
+            ? const SizedBox()
+            : Text(
+                text,
+                textAlign: TextAlign.justify,
+                style: const TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 16,
+                  letterSpacing: 0.5,
+                ),
+              )
       ],
     );
   }
@@ -43,10 +43,11 @@ class TopicCategoryItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8),
+          padding: const EdgeInsets.symmetric(vertical: 16),
           child: Text(
             text,
             style: const TextStyle(

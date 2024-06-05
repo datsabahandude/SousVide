@@ -76,7 +76,7 @@ class AlarmProvider extends ChangeNotifier {
         MaterialPageRoute<void>(
             builder: (context) => const HomePage(
                   index: 0,
-                  isLoading: false,
+                  isLoading: true,
                 )));
   }
 

@@ -52,7 +52,7 @@ class _HomeBodyState extends State<HomeBody> {
               ),
             ),
             SliverPadding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+              padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
               sliver: SliverList(
                 delegate: SliverChildBuilderDelegate((context, categoryIndex) {
                   List<Topic> items = theTopics[categoryIndex].topics;
