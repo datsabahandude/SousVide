@@ -60,12 +60,10 @@ class _HomeBodyState extends State<HomeBody> {
                     text: theTopics[categoryIndex].category,
                     items: List.generate(
                       items.length,
-                      (index) => Padding(
-                          padding: const EdgeInsets.only(bottom: 16),
-                          child: TopicCard(
-                            text: items[index].text,
-                            image: items[index].image,
-                          )),
+                      (index) => TopicCard(
+                        text: items[index].text,
+                        image: items[index].image,
+                      ),
                     ),
                   );
                 }, childCount: theTopics.length),

@@ -32,7 +32,12 @@ class SelectAlarmPopup {
                         reader.scheduleNotification(notificationtime, id);
                         Navigator.pop(context);
                         Get.snackbar('Success', 'Alarm added',
-                            backgroundColor: Colors.white);
+                            colorText: Colors.white,
+                            backgroundColor: Colors.blueGrey,
+                            icon: const Icon(
+                              Icons.check,
+                              color: Colors.white,
+                            ));
                       },
                       title: const Text('Method A:'),
                       subtitle: const Text('Temp: 45°C+60°C, Time: 3h+3h'),
@@ -50,7 +55,12 @@ class SelectAlarmPopup {
                         reader.scheduleNotification(notificationtime, id);
                         Navigator.pop(context);
                         Get.snackbar('Success', 'Alarm added',
-                            backgroundColor: Colors.white);
+                            colorText: Colors.white,
+                            backgroundColor: Colors.blueGrey,
+                            icon: const Icon(
+                              Icons.check,
+                              color: Colors.white,
+                            ));
                       },
                       title: const Text('Method B:'),
                       subtitle: const Text('Temp: 60°C, Time: 6h'),

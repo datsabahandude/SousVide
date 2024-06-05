@@ -12,12 +12,9 @@ class TopicCard extends StatelessWidget {
       runSpacing: 5,
       children: [
         image != null
-            ? Padding(
-                padding: const EdgeInsets.only(bottom: 8),
-                child: Image.asset(
-                  image!,
-                  fit: BoxFit.cover,
-                ),
+            ? Image.asset(
+                image!,
+                fit: BoxFit.cover,
               )
             : Container(),
         Text(
@@ -49,7 +46,7 @@ class TopicCategoryItem extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 16),
+          padding: const EdgeInsets.symmetric(vertical: 8),
           child: Text(
             text,
             style: const TextStyle(

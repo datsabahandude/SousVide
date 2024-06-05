@@ -99,70 +99,78 @@ class _ActiveAlarmBodyState extends State<ActiveAlarmBody> {
                 } else if (item.part == 2) {
                   part = '2';
                 }
-                return Card(
-                  child: ListTile(
-                    onTap: () {
-                      if (isFinished && (isEnd == false)) {
-                        showProceed(alarm, item);
-                      } else {
-                        showDialog(
-                            context: context,
-                            builder: ((context) {
-                              return AlertDialog(
-                                title: const Text(
-                                  'Delete?',
-                                  style: TextStyle(fontSize: 18),
-                                ),
-                                actions: [
-                                  ElevatedButton(
-                                    onPressed: () {
-                                      alarm.cancelNotification(item.id!);
-                                      Navigator.pop(context);
-                                    },
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: const Color(0xFFC21C1C),
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(12)),
+                return Container(
+                  constraints: const BoxConstraints(maxWidth: 700),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: Card(
+                      elevation: 2,
+                      child: ListTile(
+                        onTap: () {
+                          if (isFinished && (isEnd == false)) {
+                            showProceed(alarm, item);
+                          } else {
+                            showDialog(
+                                context: context,
+                                builder: ((context) {
+                                  return AlertDialog(
+                                    title: const Text(
+                                      'Delete?',
+                                      style: TextStyle(fontSize: 18),
                                     ),
-                                    child: const Text(
-                                      'Confirm',
-                                      style: TextStyle(color: Colors.white),
-                                    ),
-                                  )
+                                    actions: [
+                                      ElevatedButton(
+                                        onPressed: () {
+                                          alarm.cancelNotification(item.id!);
+                                          Navigator.pop(context);
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor:
+                                              const Color(0xFFC21C1C),
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(12)),
+                                        ),
+                                        child: const Text(
+                                          'Confirm',
+                                          style: TextStyle(color: Colors.white),
+                                        ),
+                                      )
+                                    ],
+                                  );
+                                }));
+                          }
+                        },
+                        leading: isFinished
+                            ? const Icon(Icons.done, color: Colors.green)
+                            : const Icon(
+                                Icons.alarm_outlined,
+                                color: Color(0xFFC21C1C),
+                              ),
+                        title: Text(
+                          DateFormat.yMEd().add_jms().format(alarmEnd),
+                        ),
+                        subtitle: isFinished
+                            ? null
+                            : SlideCountdownSeparated(
+                                duration: alarmEnd.difference(
+                                DateTime.now(),
+                              )),
+                        trailing: isEnd && part != '2'
+                            ? Text(item.label ?? '') // 0 = method B only
+                            : Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(item.label ?? ''), // 1 or 2 = method A
+                                  (isFinished && part == '1')
+                                      ? const Text(
+                                          'Proceed Part 2?') // timer passed
+                                      : Text(
+                                          'Part $part'), // display part when timer still running
                                 ],
-                              );
-                            }));
-                      }
-                    },
-                    leading: isFinished
-                        ? const Icon(Icons.done, color: Colors.green)
-                        : const Icon(
-                            Icons.alarm_outlined,
-                            color: Color(0xFFC21C1C),
-                          ),
-                    title: Text(
-                      DateFormat.yMEd().add_jms().format(alarmEnd),
+                              ),
+                      ),
                     ),
-                    subtitle: isFinished
-                        ? null
-                        : SlideCountdownSeparated(
-                            duration: alarmEnd.difference(
-                            DateTime.now(),
-                          )),
-                    trailing: isEnd && part != '2'
-                        ? Text(item.label ?? '') // 0 = method B only
-                        : Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(item.label ?? ''), // 1 or 2 = method A
-                              (isFinished && part == '1')
-                                  ? const Text(
-                                      'Proceed Part 2?') // timer passed
-                                  : Text(
-                                      'Part $part'), // display part when timer still running
-                            ],
-                          ),
                   ),
                 );
               });
@@ -207,7 +215,12 @@ class _ActiveAlarmBodyState extends State<ActiveAlarmBody> {
 
                       reader.scheduleNotification(notificationtime, id);
                       Get.snackbar('Success', 'Alarm added',
-                          backgroundColor: Colors.white);
+                          colorText: Colors.white,
+                          backgroundColor: Colors.blueGrey,
+                          icon: const Icon(
+                            Icons.check,
+                            color: Colors.white,
+                          ));
                       Navigator.pop(context);
                     },
                     style:

@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -30,6 +28,7 @@ class _StepsPageState extends State<StepsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: isFirst ? Colors.blueGrey : Colors.white,
       body: Stack(
         children: [
           PageView(
@@ -167,6 +166,44 @@ class _StepsPageState extends State<StepsPage> {
               ),
             ],
           ),
+          isLast
+              ? SafeArea(
+                  child: Align(
+                    alignment: Alignment.topLeft,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: InkWell(
+                        onTap: () {},
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.blueGrey,
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: const Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                CircleAvatar(
+                                  backgroundColor: Colors.transparent,
+                                  child: Icon(
+                                    Icons.exit_to_app,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                Text(
+                                  'Exit Cooking Steps',
+                                  style: TextStyle(color: Colors.white),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                )
+              : Container(),
           Align(
             alignment: Alignment.bottomCenter,
             child: isFirst
