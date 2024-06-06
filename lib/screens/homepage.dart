@@ -5,7 +5,9 @@ import 'package:sous_v/components/custom_drawer.dart';
 import 'package:sous_v/components/home_body.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final int index;
+  final bool isLoading;
+  const HomePage({super.key, required this.index, required this.isLoading});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -13,16 +15,20 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-  int _selectedIndex = 0;
+  int index = 0;
   bool isLoading = true;
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 4), () {
-      setState(() {
-        isLoading = false;
+    index = widget.index;
+    isLoading = widget.isLoading;
+    if (isLoading) {
+      Future.delayed(const Duration(seconds: 4), () {
+        setState(() {
+          isLoading = false;
+        });
       });
-    });
+    }
   }
 
   @override
@@ -52,10 +58,10 @@ class _HomePageState extends State<HomePage> {
               )
             : Scaffold(
                 key: _scaffoldKey,
-                body: screen[_selectedIndex],
+                body: screen[index],
                 drawer: const CustomDrawer(),
                 bottomNavigationBar: BottomNavigationBar(
-                    currentIndex: _selectedIndex,
+                    currentIndex: index,
                     onTap: _onItemTap,
                     backgroundColor: Colors.blueGrey,
                     selectedFontSize: 0,
@@ -86,7 +92,7 @@ class _HomePageState extends State<HomePage> {
 
   void _onItemTap(int index) {
     setState(() {
-      _selectedIndex = index;
+      this.index = index;
     });
   }
 }

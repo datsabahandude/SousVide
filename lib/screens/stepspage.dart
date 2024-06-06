@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:sous_v/components/alarm_provider.dart';
 import 'package:sous_v/components/select_alarm_popup.dart';
+import 'package:sous_v/screens/homepage.dart';
 
 class StepsPage extends StatefulWidget {
   const StepsPage({super.key});
@@ -173,7 +175,12 @@ class _StepsPageState extends State<StepsPage> {
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          Get.to(const HomePage(
+                            index: 0,
+                            isLoading: false,
+                          ));
+                        },
                         child: Container(
                           decoration: BoxDecoration(
                             color: Colors.blueGrey,
