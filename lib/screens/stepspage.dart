@@ -70,6 +70,14 @@ class _StepsPageState extends State<StepsPage> {
                               fontWeight: FontWeight.bold),
                         ),
                         Text(
+                          '(50-100g/slice, 2.5cm thickness)\n',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.black54,
+                            fontSize: 14,
+                          ),
+                        ),
+                        Text(
                           'May season or marinade according to your preferences',
                           textAlign: TextAlign.center,
                           style: TextStyle(
